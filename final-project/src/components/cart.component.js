@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import CartDataService from "../services/cart.service";
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const Cart = (props) => {
 
@@ -12,6 +12,7 @@ const Cart = (props) => {
   const [message, setMessage] = useState("");
   const [currentCart, setcurrentCart] = useState({});
   let idCarts = useParams().id;
+  let navigate = useNavigate();
 
   useEffect(() => {
     getCart(idCarts);
@@ -100,11 +101,13 @@ const Cart = (props) => {
     CartDataService.deleteProduct(id)
       .then(response => {
         console.log(response.data);
-        props.history.push('/home')
+        return navigate("/home");
+        // props.history.push('/home')
       })
       .catch(e => {
         console.log(e);
       });
+      // return <Navigate to="/" />;
   }
 
 
